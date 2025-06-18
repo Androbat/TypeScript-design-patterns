@@ -49,3 +49,27 @@ class ListItem implements Node {
 }
 
 // To be continue...
+
+class HTMLVisitor implements NodeVisitor {
+    output = "";
+
+    appendText(text: Text){
+        this.output += text.content;
+
+        appendBold(text: BoldText){
+            this.output += `<b>${text.content}</b>`;
+        }
+
+        appendUnorderedList(list: UnorderedList){
+            this.output += "<ul>";
+            for (const item of list.items) {
+                item.appendTo(this);
+            }
+            this.output += "</ul>";
+        }
+
+        appendListItem(item: ListItem){
+            this.output += `<li>${item.content}</li>`;
+        }
+    }
+}
